@@ -6,7 +6,10 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+
+#if TRIAL
 using Microsoft.Win32;
+#endif
 
 namespace LavoroNET
 {
@@ -28,6 +31,7 @@ namespace LavoroNET
     private Button buttonNavigate;
     private Button buttonAddFile;
 
+    #if TRIAL
     public void CheckRuns() {
 		try {
 			RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\OVG-Developers", true);
@@ -68,6 +72,7 @@ namespace LavoroNET
 		
 		return false;
 	}
+    #endif
     
     public MainForm() {
     	this.InitializeComponent();
@@ -312,9 +317,11 @@ namespace LavoroNET
     }
 		void MainFormShown(object sender, EventArgs e)
 		{
+			#if TRIAL
 			if (!IsRegistered()) {
     			CheckRuns();
     		}
+			#endif
 		}
   }
 }
